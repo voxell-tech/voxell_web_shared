@@ -1,0 +1,98 @@
+/* Shared theme + chrome styles for Voxell's Tola sites.
+   Imported from a site's tailwind.css (after `@import 'tailwindcss'`):
+     @source "../../shared";
+     @import "../../shared/styles.css";
+
+   OVERRIDE: to change a token for one site, redeclare it in @theme (or in the
+   [data-theme="light"] block) in that site's own tailwind.css AFTER this import —
+   later declarations win. Sites may also add their own extra tokens the same way. */
+
+/* Monokai Pro palette (dark = default) */
+@theme {
+    --color-accent: #78dce8;
+    --color-purple: #ab9df2;
+    --color-bg: #19181a;
+    --color-surface: #2d2a2e;
+    --color-text: #fcfcfa;
+    --color-muted: #939293;
+    --color-subtle: #c1c0c0;
+    --color-border: rgb(255 255 255 / 0.1);
+}
+
+/* Light theme overrides */
+[data-theme="light"] {
+    --color-accent: #0d7a8a;
+    --color-purple: #6248c8;
+    --color-bg: #fafafa;
+    --color-surface: #f0eeef;
+    --color-text: #2d2a2e;
+    --color-muted: #727072;
+    --color-subtle: #5b595c;
+    --color-border: rgb(0 0 0 / 0.1);
+
+    color-scheme: light;
+}
+
+/* Base element styles */
+@layer base {
+    html {
+        @apply scroll-smooth bg-bg text-text;
+        color-scheme: dark;
+    }
+
+    body {
+        @apply antialiased min-h-screen;
+    }
+
+    a {
+        @apply text-accent hover:opacity-80 transition-opacity;
+    }
+
+    code {
+        @apply bg-surface px-1.5 py-0.5 rounded-sm text-sm;
+    }
+
+    pre {
+        @apply bg-surface p-2 rounded-sm overflow-x-auto;
+    }
+
+    pre code {
+        @apply bg-transparent p-0;
+    }
+
+    /* Table styles */
+    table {
+        @apply w-full border-collapse border-4 border-gray-600 my-4;
+    }
+
+    th,
+    td {
+        @apply border-4 border-gray-600 p-2 text-left;
+    }
+
+    th {
+        @apply bg-surface font-semibold;
+    }
+}
+
+/* Theme toggle icon visibility (paired with #theme-toggle in the shared nav) */
+.icon-sun { display: inline; }
+.icon-moon { display: none; }
+
+[data-theme="light"] .icon-sun { display: none; }
+[data-theme="light"] .icon-moon { display: inline; }
+
+/* Social icons: brand SVGs recolored to a single token via CSS mask so they
+   render as uniform, theme-aware tinted silhouettes. */
+.social-icon {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: var(--color-muted);
+    -webkit-mask: var(--icon) center / contain no-repeat;
+    mask: var(--icon) center / contain no-repeat;
+}
+
+.social-link:hover .social-icon {
+    background-color: var(--color-accent);
+}
