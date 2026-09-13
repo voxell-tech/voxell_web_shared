@@ -1,4 +1,4 @@
-// Canonical Voxell URLs — single source of truth for links across all sites.
+// Canonical Voxell URLs: single source of truth for links across all sites.
 // Update here and bump the submodule everywhere.
 // Import (from a site): #import "/shared/links.typ": links
 

@@ -1,6 +1,6 @@
 # Voxell Web Shared
 
-Shared chrome for Voxell's [Tola](https://github.com/) sites — the top nav, the
+Shared chrome for Voxell's [Tola](https://github.com/) sites: the top nav, the
 site footer, the canonical link list, the brand/social icon set, and the
 social-icon CSS. Embedded in each site as a git submodule at `shared/` so a
 change lands everywhere with a single submodule bump.
@@ -10,8 +10,8 @@ change lands everywhere with a single submodule bump.
 | Path | What |
 |------|------|
 | `links.typ` | Canonical URLs (`links.github`, `links.discord`, …). Single source of truth. |
-| `components/nav.typ` | `nav(links: (...))` — parameterized top nav with theme toggle + active states. |
-| `components/footer.typ` | `footer()` — sectioned footer (Community / Support / Contact). |
+| `components/nav.typ` | `nav(links: (...))`: parameterized top nav with theme toggle + active states. |
+| `components/footer.typ` | `footer()`: sectioned footer (Community / Support / Contact). |
 | `components/social.typ` | `footer-social(href, icon, label)` helper. |
 | `icons/` | Shared SVGs (voxell, sun, moon, github, discord, youtube, linkedin, reddit, opencollective, mail). |
 | `styles.css` | `.social-icon` mask-tint rules. |

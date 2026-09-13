@@ -7,4 +7,7 @@
   href: href,
   target: "_blank",
   rel: ("noopener", "noreferrer"),
-)[#html.elem("span", attrs: (class: "social-icon", style: "--icon: url('/icons/" + icon + "')"))#label]]
+)[#html.elem("span", attrs: (
+    class: "social-icon",
+    style: "--icon: url('/icons/" + icon + "')",
+  ))#label]]

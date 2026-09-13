@@ -4,7 +4,7 @@
      @import "../../shared/styles.css";
 
    OVERRIDE: to change a token for one site, redeclare it in @theme (or in the
-   [data-theme="light"] block) in that site's own tailwind.css AFTER this import —
+   [data-theme="light"] block) in that site's own tailwind.css AFTER this import;
    later declarations win. Sites may also add their own extra tokens the same way. */
 
 /* Monokai Pro palette (dark = default) */

@@ -17,12 +17,19 @@
         target: "_blank",
         rel: ("noopener", "noreferrer"),
       )[
-        #html.elem("img", attrs: (src: "/icons/voxell.svg", style: "height: 1.75rem; display: inline-block;"))
+        #html.elem("img", attrs: (
+          src: "/icons/voxell.svg",
+          style: "height: 1.75rem; display: inline-block;",
+        ))
       ]
       #html.div(class: "grid grid-cols-2 sm:grid-cols-3 gap-8")[
         #html.div(class: "flex flex-col gap-3")[
           #footer-heading[Support]
-          #footer-social(links.opencollective, "opencollective.svg", [Open Collective])
+          #footer-social(
+            links.opencollective,
+            "opencollective.svg",
+            [Open Collective],
+          )
         ]
         #html.div(class: "flex flex-col gap-3")[
           #footer-heading[Community]

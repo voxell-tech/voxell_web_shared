@@ -23,18 +23,30 @@
   let brand-content = if brand != none {
     brand
   } else {
-    html.elem("img", attrs: (src: "/icons/voxell.svg", style: "height: 1.5rem; display: inline-block;"))
+    html.elem("img", attrs: (
+      src: "/icons/voxell.svg",
+      style: "height: 1.5rem; display: inline-block;",
+    ))
   }
 
   html.nav(class: "border-b border-text/10")[
-    #html.div(class: "max-w-3xl mx-auto px-4 py-3 flex items-center justify-between")[
-      #html.a(class: "opacity-75 hover:opacity-100 transition-opacity", href: brand-href)[
+    #html.div(
+      class: "max-w-3xl mx-auto px-4 py-3 flex items-center justify-between",
+    )[
+      #html.a(
+        class: "opacity-75 hover:opacity-100 transition-opacity",
+        href: brand-href,
+      )[
         #brand-content
       ]
       #html.div(class: "flex items-center " + gap)[
         #for link in links {
           let match = link.at("match", default: none)
-          let active = match != none and current-permalink != none and current-permalink.starts-with(match)
+          let active = (
+            match != none
+              and current-permalink != none
+              and current-permalink.starts-with(match)
+          )
           let link-class = if active {
             "text-accent transition-colors"
           } else {
@@ -44,15 +56,23 @@
           html.div[#html.a(
             class: link-class,
             href: link.href,
-            ..if external { (target: "_blank", rel: ("noopener", "noreferrer")) },
+            ..if external {
+              (target: "_blank", rel: ("noopener", "noreferrer"))
+            },
           )[#link.label]]
         }
         #html.elem("button", attrs: (
           id: "theme-toggle",
           class: "text-muted hover:text-accent transition-colors cursor-pointer bg-transparent border-0 p-0 leading-none",
         ))[
-          #html.span(class: "icon-sun")[#html.elem("img", attrs: (src: "/icons/sun.svg", style: "height: 1.25rem; display: inline-block;"))]
-          #html.span(class: "icon-moon")[#html.elem("img", attrs: (src: "/icons/moon.svg", style: "height: 1.25rem; display: inline-block;"))]
+          #html.span(class: "icon-sun")[#html.elem("img", attrs: (
+            src: "/icons/sun.svg",
+            style: "height: 1.25rem; display: inline-block;",
+          ))]
+          #html.span(class: "icon-moon")[#html.elem("img", attrs: (
+            src: "/icons/moon.svg",
+            style: "height: 1.25rem; display: inline-block;",
+          ))]
         ]
       ]
     ]
