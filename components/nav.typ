@@ -9,16 +9,29 @@
 // Each link is a dict: (label, href, external: false, match: none).
 // `match`: when current-permalink starts with this prefix the link is shown as
 // active (text-accent). `external` opens in a new tab.
+//
+// `brand`: content for the top-left brand slot; defaults to the Voxell
+// logo. Pass e.g. `brand: [Home]` for a site that wants text there instead.
+//
+// `gap`: Tailwind gap class between the right-side items; defaults to
+// "gap-6". A site with more/wider items (icon badges, say) can tighten
+// it, e.g. `gap: "gap-3"`.
 
 #import "@tola/current:0.0.0": current-permalink
 
-#let nav(brand-href: "/", links: ()) = {
+#let nav(brand-href: "/", brand: none, gap: "gap-6", links: ()) = {
+  let brand-content = if brand != none {
+    brand
+  } else {
+    html.elem("img", attrs: (src: "/icons/voxell.svg", style: "height: 1.5rem; display: inline-block;"))
+  }
+
   html.nav(class: "border-b border-text/10")[
     #html.div(class: "max-w-3xl mx-auto px-4 py-3 flex items-center justify-between")[
       #html.a(class: "opacity-75 hover:opacity-100 transition-opacity", href: brand-href)[
-        #html.elem("img", attrs: (src: "/icons/voxell.svg", style: "height: 1.5rem; display: inline-block;"))
+        #brand-content
       ]
-      #html.div(class: "flex items-center gap-6")[
+      #html.div(class: "flex items-center " + gap)[
         #for link in links {
           let match = link.at("match", default: none)
           let active = match != none and current-permalink != none and current-permalink.starts-with(match)
