@@ -31,7 +31,7 @@
 
   html.nav(class: "border-b border-text/10")[
     #html.div(
-      class: "max-w-3xl mx-auto px-4 py-3 flex items-center justify-between",
+      class: "max-w-3xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-y-2",
     )[
       #html.a(
         class: "opacity-75 hover:opacity-100 transition-opacity",
@@ -39,7 +39,7 @@
       )[
         #brand-content
       ]
-      #html.div(class: "flex items-center " + gap)[
+      #html.div(class: "flex flex-wrap items-center gap-y-2 " + gap)[
         #for link in links {
           let match = link.at("match", default: none)
           let active = (
