@@ -25,6 +25,7 @@
   } else {
     html.elem("img", attrs: (
       src: "/icons/voxell.svg",
+      alt: "Voxell",
       style: "height: 1.5rem; display: inline-block;",
     ))
   }
@@ -63,14 +64,18 @@
         }
         #html.elem("button", attrs: (
           id: "theme-toggle",
+          type: "button",
+          aria-label: "Toggle light/dark theme",
           class: "text-muted hover:text-accent transition-colors cursor-pointer bg-transparent border-0 p-0 leading-none",
         ))[
           #html.span(class: "icon-sun")[#html.elem("img", attrs: (
             src: "/icons/sun.svg",
+            alt: "",
             style: "height: 1.25rem; display: inline-block;",
           ))]
           #html.span(class: "icon-moon")[#html.elem("img", attrs: (
             src: "/icons/moon.svg",
+            alt: "",
             style: "height: 1.25rem; display: inline-block;",
           ))]
         ]
