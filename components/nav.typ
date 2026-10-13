@@ -7,8 +7,8 @@
 //   ))
 //
 // Each link is a dict: (label, href, external: false, match: none).
-// `match`: when current-permalink starts with this prefix the link is shown as
-// active (text-accent). `external` opens in a new tab.
+// `match`: when the current page's route starts with this prefix the link is
+// shown as active (text-accent). `external` opens in a new tab.
 //
 // `brand`: content for the top-left brand slot; defaults to the Voxell
 // logo. Pass e.g. `brand: [Home]` for a site that wants text there instead.
@@ -16,10 +16,27 @@
 // `gap`: Tailwind gap class between the right-side items; defaults to
 // "gap-6". A site with more/wider items (icon badges, say) can tighten
 // it, e.g. `gap: "gap-3"`.
+//
+// `current`: the current page's route (e.g. "/projects/"), which `match`
+// is tested against. Tola 0.8 sites pass it in, since a page's route is
+// now the site's own to decide. Left at `auto`, it's read from Tola
+// 0.7's `@tola/current`; the import sits inside the branch because that
+// package no longer exists in 0.8.
 
-#import "@tola/current:0.0.0": current-permalink
+#let nav(
+  brand-href: "/",
+  brand: none,
+  gap: "gap-6",
+  links: (),
+  current: auto,
+) = {
+  let current-permalink = if current == auto {
+    import "@tola/current:0.0.0": current-permalink
+    current-permalink
+  } else {
+    current
+  }
 
-#let nav(brand-href: "/", brand: none, gap: "gap-6", links: ()) = {
   let brand-content = if brand != none {
     brand
   } else {
