@@ -190,7 +190,7 @@
 
     #html.div(class: "grid gap-4 md:grid-cols-2 md:items-stretch")[
       #html.div(
-        class: "rounded-lg border border-text/10 bg-bg/70 overflow-hidden "
+        class: "min-w-0 rounded-lg border border-text/10 bg-bg/70 overflow-hidden "
           + code-order,
       )[
         #html.div(
@@ -204,7 +204,7 @@
       ]
 
       #html.div(
-        class: "rounded-lg border border-accent/30 bg-surface/40 overflow-hidden "
+        class: "min-w-0 rounded-lg border border-accent/30 bg-surface/40 overflow-hidden "
           + preview-order,
       )[
         #html.div(
