@@ -60,10 +60,11 @@
   // since there's no way to make a static badge image react to the
   // theme toggle. `flat-square` over `for-the-badge`: the latter bakes
   // generous internal padding into the SVG itself as part of its look,
-  // which can't be stripped via CSS on an opaque <img>.
-  let github-badge = html.elem("img", attrs: (
+  // which can't be stripped via CSS on an opaque <img>. `repo` is
+  // `owner/name`.
+  let github-badge(repo) = html.elem("img", attrs: (
     src: "https://img.shields.io/github/stars/"
-      + project.repo.trim("https://github.com/", at: start)
+      + repo
       + "?style=flat-square&logo=github&logoColor=white&label=&color=19181a",
     height: "20",
     alt: "GitHub stars",
@@ -93,34 +94,61 @@
     style: "--icon: url('/icons/" + icon + "')",
   ))[#html.span(class: "sr-only")[#label]]
 
+  // The pieces above, for a site's own `nav` to reuse.
+  let parts = (
+    github-badge: github-badge,
+    discord-badge: discord-badge,
+    donate-button: donate-button,
+    nav-icon: nav-icon,
+  )
+
+  // A project site's nav. A site that isn't a single project
+  // (voxell.dev) passes `nav: parts => (..)` instead, and a `brand`;
+  // `brand: none` is the Voxell logo.
+  let project-links(project) = (
+    (label: [Docs], href: "/docs/", match: "/docs"),
+    (
+      label: github-badge(
+        project.repo.trim("https://github.com/", at: start),
+      ),
+      href: project.repo,
+      external: true,
+    ),
+    (label: discord-badge, href: links.discord, external: true),
+    // A project's own OpenCollective project when it has one, so
+    // donations go to it rather than to Voxell as a whole.
+    (
+      label: donate-button,
+      href: project.at("donate", default: links.opencollective),
+      external: true,
+    ),
+    (
+      label: nav-icon("voxell.svg", "Voxell"),
+      href: links.website,
+      external: true,
+    ),
+  )
   nav(
-    brand: html.span(class: "font-semibold text-text")[Home],
+    brand: project.at(
+      "brand",
+      default: html.span(class: "font-semibold text-text")[Home],
+    ),
     gap: "gap-3",
     current: current,
-    links: (
-      (label: [Docs], href: "/docs/", match: "/docs"),
-      (label: github-badge, href: project.repo, external: true),
-      (label: discord-badge, href: links.discord, external: true),
-      // A project's own OpenCollective project when it has one, so
-      // donations go to it rather than to Voxell as a whole.
-      (
-        label: donate-button,
-        href: project.at("donate", default: links.opencollective),
-        external: true,
-      ),
-      (
-        label: nav-icon("voxell.svg", "Voxell"),
-        href: links.website,
-        external: true,
-      ),
-    ),
+    links: if "nav" in project { (project.nav)(parts) } else {
+      project-links(project)
+    },
   )
 
   // Every page (docs and home alike) gets the same wide container; each
   // page's own content narrows individual reading columns where it
   // wants to (the docs view's prose column, the landing page's hero/
   // prose sections), rather than the page shell doing it for them.
-  html.main(class: "max-w-7xl mx-auto px-4 py-8")[#body]
+  // `main-class` lets a site with full-bleed sections (a hero that
+  // spans the window) drop the container and pad its own sections.
+  html.main(
+    class: project.at("main-class", default: "max-w-7xl mx-auto px-4 py-8"),
+  )[#body]
 
   footer()
 
