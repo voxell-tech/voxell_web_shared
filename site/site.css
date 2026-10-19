@@ -15,6 +15,67 @@
 /* In-page links glide to their target instead of jumping. */
 html { scroll-behavior: smooth; }
 
+/* The nav's shields.io badges, one image per theme (layout.typ). */
+.badge-dark { display: inline-block; }
+.badge-light { display: none; }
+[data-theme="light"] .badge-dark { display: none; }
+[data-theme="light"] .badge-light { display: inline-block; }
+
+/* The nav's donate button (layout.typ) breathes a red glow, and burns
+   brighter under the pointer. Still for reduced motion. */
+.donate-button {
+    position: relative;
+    display: inline-block;
+    animation: donate-glow 2.4s ease-in-out infinite;
+    transition: transform 0.25s ease;
+}
+/* The hover glow is its own layer fading in over the pulse, so the
+   pulse never stops and nothing jumps. */
+.donate-button::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    box-shadow:
+        0 0 12px 2px color-mix(in srgb, var(--color-red) 70%, transparent),
+        0 0 28px 6px color-mix(in srgb, var(--color-red) 35%, transparent);
+}
+a:hover > .donate-button {
+    transform: translateY(-1px);
+}
+a:hover > .donate-button::after {
+    opacity: 1;
+}
+@keyframes donate-glow {
+    0%, 100% {
+        box-shadow: 0 0 4px 0 color-mix(in srgb, var(--color-red) 35%, transparent);
+    }
+    50% {
+        box-shadow:
+            0 0 10px 2px color-mix(in srgb, var(--color-red) 55%, transparent),
+            0 0 22px 4px color-mix(in srgb, var(--color-red) 25%, transparent);
+    }
+}
+/* Its heart beats twice, then rests. */
+.donate-heart {
+    display: inline-block;
+    margin-right: 0.3em;
+    animation: donate-beat 1.2s ease-in-out infinite;
+}
+@keyframes donate-beat {
+    0%, 40%, 100% { transform: scale(1); }
+    10% { transform: scale(1.3); }
+    20% { transform: scale(1.05); }
+    30% { transform: scale(1.22); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .donate-button,
+    .donate-heart { animation: none; }
+}
+
 /* Syntax highlighting. Typst highlights code blocks at build time with
    the dark Monokai Pro theme (monokai-pro.tmTheme), baking each
    token's color in as an inline `style="color: ..."`. Light mode remaps

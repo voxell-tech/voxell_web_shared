@@ -52,38 +52,50 @@
     )[#it.body]
   }
 
-  // Both badges match the page's own dark-mode bg (#19181a) instead of
-  // shields.io's default color, so they blend into the nav instead of
-  // showing a boxed background: shields.io has no true transparent
-  // option (`color=transparent` and an 8-digit alpha hex both just fall
-  // back to their default green), and it won't match in light mode
-  // since there's no way to make a static badge image react to the
-  // theme toggle. `flat-square` over `for-the-badge`: the latter bakes
-  // generous internal padding into the SVG itself as part of its look,
-  // which can't be stripped via CSS on an opaque <img>. `repo` is
-  // `owner/name`.
-  let github-badge(repo) = html.elem("img", attrs: (
-    src: "https://img.shields.io/github/stars/"
-      + repo
-      + "?style=flat-square&logo=github&logoColor=white&label=&color=19181a",
-    height: "20",
-    alt: "GitHub stars",
-    style: "display: inline-block; vertical-align: middle;",
-  ))
+  // Each badge comes in two shields.io images, one per theme, matched
+  // to that theme's page bg so it blends into the nav: shields.io has
+  // no transparent option, and a static image can't follow the theme
+  // toggle, so site.css shows whichever one fits. `flat-square` over
+  // `for-the-badge`: the latter bakes generous padding into the SVG,
+  // which CSS can't strip from an opaque <img>.
+  let themed-badge(src, alt) = {
+    for (theme, bg, fg) in (
+      ("dark", "19181a", "white"),
+      ("light", "fafafa", "2d2a2e"),
+    ) {
+      html.elem("img", attrs: (
+        src: src + "&logoColor=" + fg + "&label=&color=" + bg,
+        class: "badge-" + theme,
+        height: "20",
+        alt: alt,
+        style: "vertical-align: middle;",
+      ))
+    }
+  }
 
-  let discord-badge = html.elem("img", attrs: (
-    src: "https://img.shields.io/discord/442334985471655946?style=flat-square&logo=discord&logoColor=white&label=&color=19181a",
-    height: "20",
-    alt: "Discord online",
-    style: "display: inline-block; vertical-align: middle;",
-  ))
+  // `repo` is `owner/name`.
+  let github-badge(repo) = themed-badge(
+    "https://img.shields.io/github/stars/"
+      + repo
+      + "?style=flat-square&logo=github",
+    "GitHub stars",
+  )
+
+  let discord-badge = themed-badge(
+    "https://img.shields.io/discord/442334985471655946?style=flat-square&logo=discord",
+    "Discord online",
+  )
 
   // A call to action rather than a stat like the two badges above, so it
   // gets its own pill instead of shields.io styling, with a text label
   // since there's no universally recognized "donate" glyph.
   let donate-button = html.span(
-    class: "px-2.5 py-1 rounded-md border-2 border-red/40 bg-red text-white text-sm font-medium hover:opacity-90 transition-opacity",
-  )[♥ Donate]
+    class: "donate-button px-2.5 py-1 rounded-md border-2 border-red/40 bg-red text-white text-sm font-medium",
+    {
+      html.span(class: "donate-heart")[♥]
+      [Donate]
+    },
+  )
 
   // Mask-tinted icon, same technique the shared footer's social links use
   // (see components/social.typ and .social-icon in styles.css):
