@@ -1,0 +1,127 @@
+/* Styles for the site kit (shared/site/). Imported from a project
+   site's tailwind.css after shared/styles.css:
+     @import "../../shared/site/site.css";
+   A site overrides any token here the same way it does styles.css's,
+   by redeclaring it after the import. */
+
+/* Monokai Pro accents, used by the donate button and code highlights. */
+@theme {
+    --color-red: #ff6188;
+    --color-orange: #fc9867;
+    --color-yellow: #ffd866;
+    --color-green: #a9dc76;
+}
+
+/* In-page links glide to their target instead of jumping. */
+html { scroll-behavior: smooth; }
+
+/* Syntax highlighting. Typst highlights code blocks at build time with
+   the dark Monokai Pro theme (monokai-pro.tmTheme), baking each
+   token's color in as an inline `style="color: ..."`. Light mode remaps
+   each of those dark colors to its light counterpart (the same pairs as
+   shared/scripts/monokai-pro-shiki.js); `!important` because the dark
+   color is an inline style. Text with no token color just inherits the
+   page's own text color, which already follows the theme. */
+/* Typst's HTML output keeps a theme's colors but drops its font styles,
+   so comments get their italic back here. */
+pre span[style*="#939293"] { font-style: italic; }
+
+[data-theme="light"] pre span[style*="#939293"] { color: #656565 !important; }
+[data-theme="light"] pre span[style*="#ffd866"] { color: #8a6400 !important; }
+[data-theme="light"] pre span[style*="#ab9df2"] { color: #6248c8 !important; }
+[data-theme="light"] pre span[style*="#ff6188"] { color: #c4224f !important; }
+[data-theme="light"] pre span[style*="#a9dc76"] { color: #4a761e !important; }
+[data-theme="light"] pre span[style*="#78dce8"] { color: #0c7685 !important; }
+[data-theme="light"] pre span[style*="#fcfcfa"] { color: #2d2a2e !important; }
+
+/* Diagrams with a dark and a light render (ui.typ's
+   `backend-diagram`): both renders ship in the page, since
+   the SVG's colors bake in at build time and can't react live the way
+   this file's own colors do. Toggled the same way shared/styles.css
+   already does for the nav's sun/moon icon. */
+.diagram-dark { display: inline; }
+.diagram-light { display: none; }
+
+[data-theme="light"] .diagram-dark { display: none; }
+[data-theme="light"] .diagram-light { display: inline; }
+
+/* The Discord/Voxell nav links (layout.typ) reuse the shared
+   footer's mask-tinted .social-icon, but the shared nav's own <a>
+   doesn't carry .social-link, so the hover-to-accent recolor (which
+   .social-icon normally gets from that class) is wired up locally here. */
+nav a:hover .social-icon {
+    background-color: var(--color-accent);
+}
+
+/* .social-icon has no vertical-align of its own (fine next to its own
+   label in the footer), but baseline-aligning an empty icon span reads
+   as visibly "lifted" next to plain text and <img> icons in the tight
+   nav row; center it on the line instead, scoped to nav so the
+   footer's own look is untouched. */
+nav .social-icon {
+    vertical-align: middle;
+}
+
+[data-theme="light"] {
+    --color-red: #c4224f;
+    --color-orange: #b55e1e;
+    --color-yellow: #9a7000;
+    --color-green: #5a8f25;
+
+    /* Shared --color-muted (#727072) is 4.25:1 on --color-surface here,
+       under the 4.5:1 minimum for text under 18px. Darkened locally. */
+    --color-muted: #656565;
+}
+
+/* Docs "Chapters" nav (docs-nav.typ): a native <details>
+   disclosure, collapsed behind this ghost icon toggle on mobile, a
+   plain icon in normal document flow, no button chip, so it never
+   overlaps the page title. The toggle hides itself entirely from md: up;
+   scripts/docs-nav.js is what actually keeps the element open
+   there, rather than a CSS override trying to beat the browser's own
+   closed-<details> content hiding. */
+.docs-nav-toggle {
+    @apply md:hidden inline-flex items-center text-muted hover:text-accent transition-colors cursor-pointer bg-transparent p-2 -m-2 rounded-md list-none;
+}
+.docs-nav-toggle::-webkit-details-marker {
+    display: none;
+}
+
+.docs-nav-close {
+    @apply md:hidden flex items-center gap-1.5 mb-4 text-muted hover:text-red transition-colors bg-transparent border-0 p-0 cursor-pointer text-sm;
+}
+
+/* Dimmed backdrop behind the mobile drawer; only shown while open. */
+.docs-nav-backdrop {
+    @apply hidden fixed inset-0 bg-bg/70 z-40;
+}
+.docs-nav[open] > .docs-nav-backdrop {
+    @apply block md:hidden;
+}
+
+/* Below md:, the opened body is a full-height drawer sliding in from
+   the left edge over a dimmed backdrop. From md: up it's just the
+   permanent left rail's plain content, blending into the page. */
+/* bg-bg here, not bg-surface: the active link's own highlight pill is
+   bg-surface (shared with the desktop rail, see the loop in
+   docs-nav.typ), and it needs to contrast against the drawer behind it
+   the same way it contrasts against the page on desktop; bg-surface
+   on both would make the active page's highlight invisible on mobile. */
+.docs-nav-body {
+    @apply fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] overflow-y-auto bg-bg border-r border-text/10 shadow-xl p-4;
+    @apply md:static md:inset-auto md:z-auto md:w-auto md:max-w-none md:overflow-visible md:bg-transparent md:border-0 md:shadow-none md:p-0;
+}
+
+/* Markdown rendered content */
+.markdown-body {
+    h1, h2, h3, h4, h5, h6 { @apply font-bold text-text mt-6 mb-2; }
+    h1 { @apply text-2xl; }
+    h2 { @apply text-xl; }
+    h3 { @apply text-lg; }
+    p { @apply mb-3; }
+    ul { @apply list-disc pl-5 mb-3 space-y-1; }
+    ol { @apply list-decimal pl-5 mb-3 space-y-1; }
+    blockquote { @apply border-l-4 border-text/20 pl-4 text-muted/70 mb-3 italic; }
+    hr { @apply border-text/10 my-4; }
+    img { @apply max-w-full rounded-lg my-4; }
+}

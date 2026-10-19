@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Monokai Pro (dark) for Typst's build-time syntax highlighting (see
+  `set raw(theme: ...)` in templates/base.typ). Same scopes and colors as
+  the Shiki theme in shared/scripts/monokai-pro-shiki.js. Light mode isn't
+  a second theme: assets/styles/tailwind.css remaps each of these colors
+  to its light counterpart, so every dark color here must stay unique to
+  one light color.
+-->
+<plist version="1.0">
+<dict>
+  <key>name</key>
+  <string>Monokai Pro</string>
+  <key>settings</key>
+  <array>
+    <dict>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#fcfcfa</string>
+        <key>background</key>
+        <string>#2d2a2e</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>scope</key>
+      <string>comment, punctuation.definition.comment</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#939293</string>
+        <key>fontStyle</key>
+        <string>italic</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>scope</key>
+      <string>string, string.quoted, string.template</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#ffd866</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>scope</key>
+      <string>constant.numeric, constant.language, constant.other.color, support.constant</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#ab9df2</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>scope</key>
+      <string>keyword, storage.type, storage.modifier, keyword.operator, entity.name.tag</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#ff6188</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>scope</key>
+      <string>entity.name.function, support.function</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#a9dc76</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>scope</key>
+      <string>entity.name.type, entity.name.class, entity.name.struct, entity.name.enum, entity.name.trait, support.class, entity.other.inherited-class, support.type, support.other.namespace</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#78dce8</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>scope</key>
+      <string>variable, variable.other</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#fcfcfa</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>scope</key>
+      <string>invalid</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#ff6188</string>
+        <key>fontStyle</key>
+        <string>underline</string>
+      </dict>
+    </dict>
+  </array>
+</dict>
+</plist>
