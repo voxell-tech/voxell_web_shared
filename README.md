@@ -85,6 +85,8 @@ tola.toml          [site] title, description and origin
 ```
 
 `donate` falls back to `links.opencollective`, and `scripts` to none.
+An optional `head` is content added to every page's `<head>`, such as
+an import map.
 `build(project, views: (name: view))` adds layouts beyond `"page"`
 and `"docs"`; a view is `(project, page, body) => content`.
 

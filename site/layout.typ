@@ -195,6 +195,9 @@
       // Not deferred: it sets the theme before first paint.
       #html.script("", src: "/scripts/theme.js")
       #seo-head(project, page)
+      // Anything else a site wants in every page's <head>, such as an
+      // import map.
+      #project.at("head", default: none)
     ]
     #html.body[
       #show: base.with(project, page.route)
